@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Desejos de Natal</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: url('https://static.vecteezy.com/ti/vetor-gratis/t1/4569322-enfeites-de-natal-ilustracao-de-fundo-vetor.jpg') no-repeat center center fixed; /* Adiciona a imagem de fundo */
+            background-size: cover; /* A imagem cobre toda a tela */
+            color: #333;
+            display: flex;
+            justify-content: center; /* Centralizar horizontalmente */
+            align-items: center; /* Centralizar verticalmente */
+            height: 100vh;
+            padding: 20px;
+            flex-direction: column;
+            background-blur: 5px; /* Efeito de desfoque no fundo */
+        }
+
+        header h1 {
+            text-align: center;
+            color: #28a745;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            max-width: 800px; /* Limitar a largura da página */
+            background: linear-gradient(to right, #b31e1e, #24ce5c); /* Degradê no fundo */
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); /* Sombra intensa para dar destaque */
+            border: 8px solid #2b7517; /* Borda verde */
+            position: relative;
+            z-index: 1; /* Garante que o container fique acima do fundo */
+        }
+
+        .top-section {
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background-color: #f1f1f1;
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Centralizar a parte de cima */
+        }
+
+        #wishlist ul {
+            list-style-type: none;
+            padding: 0;
+            width: 100%;
+            max-width: 400px; /* Limitar a largura da lista */
+        }
+
+        #wishlist li {
+            font-size: 1.2em;
+            margin: 10px 0;
+        }
+
+        input[type="checkbox"] {
+            margin-right: 10px;
+        }
+
+        .add-gift {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .add-gift input {
+            padding: 10px;
+            font-size: 1em;
+            width: 60%;
+            margin-right: 10px;
+        }
+
+        .add-gift button {
+            padding: 10px 20px;
+            font-size: 1em;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .add-gift button:hover {
+            background-color: #218838;
+        }
+
+        .bottom-section {
+            padding: 20px;
+            background-color: #28a745;
+            color: white;
+            text-align: center;
+            margin-top: 20px;
+            border-radius: 8px;
+        }
+
+        #timer {
+            font-size: 2em;
+            font-weight: bold;
+            color: #ff6347;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+
+    </header>
+
+    <div class="container">
+        <!-- Seção superior para sugestões de presentes -->
+        <div class="top-section">
+            <h2>Lista de Presentes:</h2>
+            <ul id="gift-list">
+                <li><input type="checkbox" id="meias" /> Meias</li>
+                <li><input type="checkbox" id="sapatos" /> Sapatos</li>
+                <li><input type="checkbox" id="brinquedos" /> Brinquedos</li>
+                <li><input type="checkbox" id="roupas" /> Roupas</li>
+                <li><input type="checkbox" id="acessorios" /> Acessórios</li>
+                <li><input type="checkbox" id="pulseiras" /> Pulseiras</li>
+            </ul>
+
+            <div class="add-gift">
+                <h2>Adicionar um Novo Item à Lista:</h2>
+                <input type="text" id="new-gift" placeholder="Digite um novo presente..." />
+                <button onclick="addGift()">Adicionar</button>
+            </div>
+        </div>
+
+        <!-- Seção inferior para o cronômetro -->
+        <div class="bottom-section">
+            <h2>Contagem Regressiva para o Natal</h2>
+            <div id="timer"></div>
+        </div>
+    </div>
+
+    <script>
+        // Função para calcular o tempo restante até o Natal
+        function updateCountdown() {
+            const now = new Date();
+            const christmas = new Date('2024-12-25T00:00:00'); // Data de Natal
+            const timeLeft = christmas - now; // Tempo restante em milissegundos
+
+            const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+            document.getElementById('timer').innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+        }
+
+        // Atualizar o cronômetro a cada segundo
+        setInterval(updateCountdown, 1000);
+
+        // Função para adicionar um novo presente à lista
+        function addGift() {
+            const giftInput = document.getElementById('new-gift');
+            const giftName = giftInput.value.trim();
+
+            if (giftName) {
+                const list = document.getElementById('gift-list');
+                const newItem = document.createElement('li');
+                newItem.innerHTML = `<input type="checkbox" /> ${giftName}`;
+                list.appendChild(newItem);
+                giftInput.value = ''; // Limpar o campo de input
+            } else {
+                alert('Por favor, insira um nome válido para o presente.');
+            }
+        }
+    </script>
+
+</body>
+</html>
